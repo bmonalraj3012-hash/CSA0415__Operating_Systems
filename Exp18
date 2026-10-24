@@ -1,0 +1,103 @@
+#include <stdio.h>
+
+struct Employee {
+    int id;
+    char name[30];
+    float salary;
+};
+
+int main() {
+    FILE *fp;
+    struct Employee e;
+    int n, i, rec;
+
+    fp = fopen("employee.dat", "wb+");
+    if (fp == NULL) {
+        perror("File open");
+        return 1;
+    }
+
+    printf("Enter number of employees: ");
+    scanf("%d", &n);
+
+    for (i = 0; i < n; i++) {
+        printf("Enter ID, name and salary: ");
+        scanf("%d %29s %f", &e.id, e.name, &e.salary);
+
+        if (fwrite(&e, sizeof(e), 1, fp) != 1) {
+            printf("Write error\n");
+            fclose(fp);
+            return 1;
+        }
+    }
+
+    printf("Enter record number to retrieve (1-%d): ", n);
+    scanf("%d", &rec);
+
+    if (rec < 1 || rec > n) {
+        printf("Invalid record number\n");
+    } else if (fseek(fp, (long)(rec - 1) * sizeof(e),
+                      SEEK_SET) != 0 ||
+               fread(&e, sizeof(e), 1, fp) != 1) {
+        printf("Read error\n");
+    } else {
+        printf("\nEmployee ID: %d\n", e.id);
+        printf("Name: %s\n", e.name);
+        printf("Salary: %.2f\n", e.salary);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+#include <stdio.h>
+
+struct Employee {
+    int id;
+    char name[30];
+    float salary;
+};
+
+int main() {
+    FILE *fp;
+    struct Employee e;
+    int n, i, rec;
+
+    fp = fopen("employee.dat", "wb+");
+    if (fp == NULL) {
+        perror("File open");
+        return 1;
+    }
+
+    printf("Enter number of employees: ");
+    scanf("%d", &n);
+
+    for (i = 0; i < n; i++) {
+        printf("Enter ID, name and salary: ");
+        scanf("%d %29s %f", &e.id, e.name, &e.salary);
+
+        if (fwrite(&e, sizeof(e), 1, fp) != 1) {
+            printf("Write error\n");
+            fclose(fp);
+            return 1;
+        }
+    }
+
+    printf("Enter record number to retrieve (1-%d): ", n);
+    scanf("%d", &rec);
+
+    if (rec < 1 || rec > n) {
+        printf("Invalid record number\n");
+    } else if (fseek(fp, (long)(rec - 1) * sizeof(e),
+                      SEEK_SET) != 0 ||
+               fread(&e, sizeof(e), 1, fp) != 1) {
+        printf("Read error\n");
+    } else {
+        printf("\nEmployee ID: %d\n", e.id);
+        printf("Name: %s\n", e.name);
+        printf("Salary: %.2f\n", e.salary);
+    }
+
+    fclose(fp);
+    return 0;
+}
